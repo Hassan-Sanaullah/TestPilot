@@ -482,4 +482,4 @@ reported everything as broken would score the same. `npm run evaluate` runs each
 with all five defects *and* a shop with none, and reports both. On the correct shop the target is
 zero reports.
 
-Suite: **228 tests passing**, including regression tests for all six defects above.
+Suite: **245 tests passing**, including regression tests for all six defects above.

@@ -144,7 +144,7 @@ Everything is TypeScript, in one npm workspaces monorepo. No paid services are r
 | **Database** | SQLite via Prisma 6 | Zero setup — no server to install. Change one line in `schema.prisma` for PostgreSQL |
 | **Validation** | Zod 3 | The AI's action schema is a Zod union, so an invalid action cannot reach the browser |
 | **AI** | Any OpenAI-compatible API | Gemini free tier by default, Groq and OpenAI supported. Falls back between providers, and serves a cached reply if all of them are down |
-| **Tests** | Vitest 3 | 228 tests: unit, plus end-to-end in real Chromium against the bundled demo shop with a scripted AI, so the suite needs no API key |
+| **Tests** | Vitest 3 | 245 tests: unit, plus end-to-end in real Chromium against the bundled demo shop with a scripted AI, so the suite needs no API key |
 | **Demo target** | Express + server-rendered HTML | ShopMax, with five switchable seeded defects |
 
 **No vendor SDKs for the AI.** Every supported provider exposes an OpenAI-compatible
@@ -554,7 +554,7 @@ npm run setup          # first time only: install, create the database, download
 npm run dev            # start everything (dashboard 5173, API 4000, demo shop 4100)
 
 npm run dev:server     # just the API          npm run dev:web   # just the dashboard
-npm test               # 228 tests: unit, plus end-to-end in real Chromium with a scripted AI
+npm test               # 245 tests: unit, plus end-to-end in real Chromium with a scripted AI
 npm run typecheck      # TypeScript across the whole project
 npm run build          # production build of the dashboard
 npm run db:studio      # browse the database in your browser
