@@ -19,21 +19,23 @@ Explore your app → design the tests → run them in Chromium → judge the res
 ## Contents
 
 1. [What this actually does](#1-what-this-actually-does)
-2. [Before you start](#2-before-you-start)
-3. [Getting it running](#3-getting-it-running)
-4. [Which port is what](#4-which-port-is-what)
-5. [Your first test, step by step](#5-your-first-test-step-by-step)
-6. [Reading a run](#6-reading-a-run)
-7. [Replaying, and why it matters](#7-replaying-and-why-it-matters)
-8. [Testing your own website](#8-testing-your-own-website)
-9. [Every screen explained](#9-every-screen-explained)
-10. [Writing a test by hand](#10-writing-a-test-by-hand)
-11. [Test data and placeholders](#11-test-data-and-placeholders)
-12. [Running it in a build](#12-running-it-in-a-build)
-13. [When something goes wrong](#13-when-something-goes-wrong)
-14. [Commands](#14-commands)
-15. [How it is built](#15-how-it-is-built)
-16. [Limits and scope](#16-limits-and-scope)
+2. [Features](#2-features)
+3. [Tech stack](#3-tech-stack)
+4. [Before you start](#4-before-you-start)
+5. [Getting it running](#5-getting-it-running)
+6. [Which port is what](#6-which-port-is-what)
+7. [Your first test, step by step](#7-your-first-test-step-by-step)
+8. [Reading a run](#8-reading-a-run)
+9. [Replaying, and why it matters](#9-replaying-and-why-it-matters)
+10. [Testing your own website](#10-testing-your-own-website)
+11. [Every screen explained](#11-every-screen-explained)
+12. [Writing a test by hand](#12-writing-a-test-by-hand)
+13. [Test data and placeholders](#13-test-data-and-placeholders)
+14. [Running it in a build](#14-running-it-in-a-build)
+15. [When something goes wrong](#15-when-something-goes-wrong)
+16. [Commands](#16-commands)
+17. [Project layout](#17-project-layout)
+18. [Limits and scope](#18-limits-and-scope)
 
 ---
 
@@ -69,7 +71,89 @@ re-driven by an AI every time would inject its own failure rate into all your re
 
 ---
 
-## 2. Before you start
+## 2. Features
+
+### Writing the tests
+
+| Feature | What it means |
+|---|---|
+| **Plain-English tests** | Describe what to do and what must be true afterwards. No code, no selectors |
+| **Automatic app exploration** | Walks your site, follows links, clicks JavaScript navigation, dismisses cookie walls, and signs in to reach pages that do not exist as links when signed out |
+| **App map** | Every page, every form field by field (type, required, min/max length, dropdown options), and the rules each page states in words |
+| **Designed tests — no AI needed** | Boundary values, required-field omission, format invalidation and equivalence classes, computed from your app's own constraints. The same app always yields the same tests |
+| **AI-written flow tests** | For what no constraint can express: completing a checkout, a multi-step wizard |
+| **Missing-test discovery** | Finds what is untested from three directions — rules with no test, forms never submitted, requirements with no passing test |
+| **Instruction linting** | Flags a test that states no expected outcome, because it cannot pass or fail honestly. **Improve with AI** rewrites it against your real page |
+| **Test data and placeholders** | `{{unique_email}}`, `{{phone}}`, `{{today}}`, `{{test_card}}` and your own named values. Fresh per run, so a registration test never collides with itself |
+| **File uploads** | Say "upload a picture" and a valid PNG, PDF, text or CSV is generated in memory. Nothing is read from your disk |
+
+### Running them
+
+| Feature | What it means |
+|---|---|
+| **Real browser** | Playwright and Chromium. Handles iframes, shadow DOM, popups and new tabs, hover menus, modals, native `confirm()` dialogs |
+| **Deterministic replay** | The first run is AI-driven and is compiled into a script. Every later run replays it with **zero** AI calls, in under two seconds |
+| **Verified scripts** | Each new script is replayed once immediately. If it does not reproduce, it is discarded rather than trusted |
+| **Self-repairing locators** | Each element is recorded with up to three spare locators verified against it, so a renamed `data-testid` is fixed with no AI call |
+| **Parallel runs** | Four at a time, sharing one browser. Twelve replays finish in under four seconds. Projects with shared data run one at a time automatically |
+| **Suite runs** | One press, one verdict — the unit a build reports on |
+| **Action safety** | The AI may only use a fixed list of actions, and every one is validated against the live page before it runs. Off-domain navigation, typing into non-inputs and invalid dropdown values are all refused |
+| **Blocked-page detection** | Says "this page shows a CAPTCHA" in plain words instead of wandering until it runs out of steps |
+| **Login sessions** | Captured automatically while exploring, or recorded by hand for SSO. Re-signs in once if a session expires |
+| **Flakiness control** | A failure is re-run alone before it is believed. A test that keeps wavering is quarantined — it still runs, it just stops deciding whether the suite passed |
+
+### Judging the result
+
+| Feature | What it means |
+|---|---|
+| **Judged against your app's own rules** | If the form says "At least 8 characters" and accepts `123`, that is a failure — even though nothing crashed |
+| **Grounded verdicts** | A failure must state expected, actual, and the rule it was judged against. Quoted evidence has to actually be on the page |
+| **App failure vs tool failure** | "Your app is broken" is kept separate from "I could not drive the browser". The second never becomes a bug report |
+| **Seven assertion types** | Visible text, page text, URL, field value, **field validity** (the browser's own validation, which is not in the page), **element counts** and **ordering** |
+| **Known failures** | A test that finds a bug becomes a replayable test. It turns green the day you fix the bug, and TestPilot offers to close the report |
+| **Background checks** | Watches for first-party HTTP 5xx and page exceptions during every run — bugs no assertion was looking for |
+
+### Reporting
+
+| Feature | What it means |
+|---|---|
+| **Bug reports** | Steps to reproduce, expected vs actual, failing screenshot, and the rule relied on. The same defect seen twice raises a counter instead of filing a duplicate |
+| **Computed coverage** | Requirement status calculated from stored links and real results, not re-judged by an AI. A requirement whose test is failing is **violated** and shown first |
+| **Structural coverage** | Pages opened, forms submitted, fields used, rules checked — needs no requirements list at all |
+| **Evidence** | A screenshot per step, the full Playwright trace on failure, and the exact page description the AI saw at every decision |
+| **Live run view** | Steps stream in over Server-Sent Events. Click any step and the screenshot, error, AI's view and locator all follow it |
+| **JUnit XML + HTML report** | For your CI system and for a human. Exit code 1 for an app failure, 2 for a tool failure |
+| **Playwright export** | Any test, or the whole project, as ordinary `.spec.ts`. Adopting this does not mean being unable to leave |
+| **Cost tracking** | API calls and tokens per run, with an indicative price. Replays show zero |
+| **Dark mode** | Throughout, with a system-preference default |
+
+---
+
+## 3. Tech stack
+
+Everything is TypeScript, in one npm workspaces monorepo. No paid services are required.
+
+| Layer | Technology | Why |
+|---|---|---|
+| **Language** | TypeScript 5 | One language across browser, server and shared schema, so a type change breaks the build rather than production |
+| **Dashboard** | React 18 · Vite 6 · Tailwind CSS 3 | Vite for instant reloads; Tailwind because the design tokens live in CSS variables and one class switches the whole theme |
+| **Charts** | Hand-written SVG | No charting library. Three shapes were needed and a library would have added hundreds of kilobytes, its own theming and its own accessibility gaps |
+| **API** | Node.js 20 · Express 4 | Small, boring, well understood |
+| **Live updates** | Server-Sent Events | A run streams one way, server to browser. WebSockets would be a bidirectional solution to a unidirectional problem |
+| **Browser automation** | Playwright (Chromium) | Auto-waiting, frame and shadow-DOM piercing, and traces you can replay afterwards |
+| **Database** | SQLite via Prisma 6 | Zero setup — no server to install. Change one line in `schema.prisma` for PostgreSQL |
+| **Validation** | Zod 3 | The AI's action schema is a Zod union, so an invalid action cannot reach the browser |
+| **AI** | Any OpenAI-compatible API | Gemini free tier by default, Groq and OpenAI supported. Falls back between providers, and serves a cached reply if all of them are down |
+| **Tests** | Vitest 3 | 228 tests: unit, plus end-to-end in real Chromium against the bundled demo shop with a scripted AI, so the suite needs no API key |
+| **Demo target** | Express + server-rendered HTML | ShopMax, with five switchable seeded defects |
+
+**No vendor SDKs for the AI.** Every supported provider exposes an OpenAI-compatible
+`/chat/completions` endpoint, so one HTTP client covers all of them — which is also what makes
+swapping providers a one-line change in `.env`.
+
+---
+
+## 4. Before you start
 
 You need two things installed. Both are free.
 
@@ -112,7 +196,7 @@ Everything below is typed into that terminal.
 
 ---
 
-## 3. Getting it running
+## 5. Getting it running
 
 ### Step 1 — get the code
 
@@ -185,7 +269,7 @@ That is it. To stop everything, press **Ctrl+C** in the terminal.
 
 ---
 
-## 4. Which port is what
+## 6. Which port is what
 
 `npm run dev` starts three programs at once:
 
@@ -202,7 +286,7 @@ Vite picks the next free port automatically and prints it.
 
 ---
 
-## 5. Your first test, step by step
+## 7. Your first test, step by step
 
 Use the demo shop first. It is a deliberately awkward website — cookie banner, hover menus,
 modals, an iframe, a three-step checkout — and it contains **five deliberate bugs** for you to find.
@@ -239,7 +323,7 @@ Go to the **Runs** tab. Some passed, and at least one should have failed — Sho
 
 ---
 
-## 6. Reading a run
+## 8. Reading a run
 
 The run page is built around one idea: **click a step, and everything follows it.**
 
@@ -269,7 +353,7 @@ blames your code for its own failures is worse than no tool, because you stop be
 
 ---
 
-## 7. Replaying, and why it matters
+## 9. Replaying, and why it matters
 
 After a test passes once, look at it in the **Test cases** tab: it now says **deterministic**.
 
@@ -299,7 +383,7 @@ Three details worth knowing:
 
 ---
 
-## 8. Testing your own website
+## 10. Testing your own website
 
 > **Only ever point TestPilot at a test, staging or local environment — never at a live site with
 > real users or real data.** The tests fill in forms, submit them, and create accounts.
@@ -325,7 +409,7 @@ and TestPilot reuses that session for every run.
 
 ---
 
-## 9. Every screen explained
+## 11. Every screen explained
 
 **Overview** — the state of things. How many tests replay deterministically, how long a full replay
 takes, how many API calls you have spent, coverage per area of your app, and a 14-day trend. The
@@ -366,7 +450,7 @@ There is a dark theme — the toggle is at the top right.
 
 ---
 
-## 10. Writing a test by hand
+## 12. Writing a test by hand
 
 Still possible, and sometimes the right tool. Press **Write one myself**.
 
@@ -385,7 +469,7 @@ rewrites one against your real page.
 
 ---
 
-## 11. Test data and placeholders
+## 13. Test data and placeholders
 
 Write a placeholder and TestPilot fills it in. These need no setup:
 
@@ -415,7 +499,7 @@ still runs on a machine that has never seen this repository.
 
 ---
 
-## 12. Running it in a build
+## 14. Running it in a build
 
 ```bash
 npm run suite -- "ShopMax" --junit results.xml --report report.html
@@ -443,7 +527,7 @@ You can also export the tests themselves as ordinary Playwright code and walk aw
 
 ---
 
-## 13. When something goes wrong
+## 15. When something goes wrong
 
 | What you see | What it means |
 |---|---|
@@ -463,7 +547,7 @@ Still stuck? The terminal running `npm run dev` prints what the engine is doing,
 
 ---
 
-## 14. Commands
+## 16. Commands
 
 ```bash
 npm run setup          # first time only: install, create the database, download Chromium
@@ -483,7 +567,7 @@ npm run evaluate -- --arms C,D --reps 3   # the research measurement (see below)
 
 ---
 
-## 15. How it is built
+## 17. Project layout
 
 ```
 packages/shared      the fixed action schema (zod) and shared types
@@ -495,14 +579,6 @@ packages/web         the React dashboard
 packages/demo-shop   ShopMax — the practice target, with five switchable seeded bugs
 docs/                the plan, the specs, benchmarks and evaluation results
 ```
-
-| Area | Technology |
-|---|---|
-| Dashboard | React 18 · Vite · Tailwind CSS (light and dark) |
-| API | Node.js 20 · Express · TypeScript · Server-Sent Events |
-| Browser | Playwright (Chromium) |
-| Database | SQLite via Prisma — switch to PostgreSQL by changing one line |
-| AI | Any OpenAI-compatible API. Gemini free tier by default; Groq and OpenAI supported |
 
 **Further reading** in `docs/`: [USAGE.md](docs/USAGE.md) is a longer walkthrough,
 [V2-HARDENING.md](docs/V2-HARDENING.md) records what broke on real websites and how it was fixed,
@@ -520,7 +596,7 @@ Results land in `docs/evaluation/` with the limits of the measurement stated in 
 
 ---
 
-## 16. Limits and scope
+## 18. Limits and scope
 
 **What it does not do:** mobile or native apps, visual regression (it does not compare pixels),
 accessibility auditing, performance budgets, API-level testing without a browser, anything behind a
