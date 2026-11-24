@@ -1,0 +1,18 @@
+{
+  "name": "@testpilot/demo-shop",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/app.js",
+  "exports": {
+    ".": "./src/app.js"
+  },
+  "description": "Tiny e-commerce app used as the evaluation target for TestPilot (contains seeded bugs).",
+  "scripts": {
+    "dev": "node src/server.js",
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}

@@ -1,0 +1,25 @@
+# Node
+node_modules/
+dist/
+*.log
+.vite/
+
+# Env / secrets
+.env
+.env.*.local
+*.local
+
+# Database + run evidence (generated at runtime)
+packages/server/data/
+packages/server/evidence/
+packages/server/test-results/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Local tool settings (machine-specific, not part of the project)
+.claude/settings.local.json

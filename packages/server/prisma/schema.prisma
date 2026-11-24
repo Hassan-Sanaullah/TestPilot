@@ -1,0 +1,368 @@
+// TestPilot data model — cases · runs · scenarios · reports (+ requirements, coverage, evidence).
+// SQLite by default (zero setup). To use PostgreSQL: change `provider` to "postgresql"
+// and point DATABASE_URL at your server; no application code changes.
+// SQLite has no native enum/JSON columns, so enums are strings and JSON is stored as text.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id            String   @id @default(cuid())
+  name          String
+  baseUrl       String
+  description   String   @default("")
+  /// Optional HTTP endpoint POSTed before each run to clear test data (e.g. http://localhost:4100/__reset)
+  resetUrl      String?
+  /// The one test account assumed by the scope; exposed to tests as {{test_user}} / {{test_password}}
+  testUser      String?
+  testPassword  String?
+  /// Fixed LLM call limit per test run (cost control)
+  llmCallBudget Int      @default(40)
+  /// Re-run a failed test once before filing a bug (flakiness control)
+  retryOnFail   Boolean  @default(true)
+  /// JSON array of extra hostnames the test may visit (SSO, payment sandbox, CDN)
+  allowedDomains String  @default("[]")
+  viewportWidth  Int     @default(1280)
+  viewportHeight Int     @default(900)
+  /// Max actions per run (0 = use the server default)
+  maxSteps       Int     @default(30)
+  /// Path to a recorded Playwright storageState file, reused by every run
+  storageState   String?
+  /// How to answer JS alert/confirm/prompt dialogs: accept | dismiss
+  dialogAction   String  @default("accept")
+  /// Run this project's tests at the same time. Turn off when tests share data.
+  parallel       Boolean @default(true)
+  lastExploredAt DateTime?
+  /// JSON key/value fixtures a test can use as {{data.<key>}} (phone, card, product name)
+  testData       String  @default("{}")
+  /// Path to a storageState captured automatically when the explorer signed in
+  autoSession    String?
+  autoSessionAt  DateTime?
+  createdAt     DateTime @default(now())
+
+  requirements     Requirement[]
+  testCases        TestCase[]
+  coverageProfiles CoverageProfile[]
+  gapScenarios     GapScenario[]
+  bugReports       BugReport[]
+  inventory        ElementInventory[]
+  pages            AppPage[]
+  suiteRuns        SuiteRun[]
+}
+
+/// A plain-English behaviour the application must satisfy (R1, R2, ...).
+model Requirement {
+  id        String   @id @default(cuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  key       String
+  text      String
+  /// manual | dom   (dom = proposed by TestPilot from the page structure)
+  source    String   @default("manual")
+  /// Where the rule was found, when it came from the app map
+  pageUrl   String?
+  /// The stated rule this requirement was derived from, quoted
+  ruleText  String?
+  createdAt DateTime @default(now())
+
+  coverageItems CoverageItem[]
+  gapScenarios  GapScenario[]
+  links         TestRequirement[]
+
+  @@unique([projectId, key])
+}
+
+model TestCase {
+  id            String   @id @default(cuid())
+  projectId     String
+  project       Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  title         String
+  instruction   String
+  /// user | gap   (gap = converted from a generated gap scenario)
+  origin        String   @default("user")
+  gapScenarioId String?
+  /// JSON ScriptStep[] compiled from a passing run: resilient locators plus the
+  /// action and assertion for each step. Present = this test can be replayed
+  /// deterministically, with no AI at run time.
+  script          String?
+  scriptUpdatedAt DateTime?
+  scriptFromRunId String?
+  /// Set when a verification replay reproduced this script
+  scriptVerifiedAt DateTime?
+  /// happy-path | negative | edge | flow
+  kind          String   @default("happy-path")
+  /// boundary | equivalence | required | format | uniqueness | flow | exploratory | user
+  technique     String?
+  /// AppPage.kind of the page under test
+  area          String?
+  /// The page this test is about (canonical, from the app map)
+  targetUrl     String?
+  /// Form and field under test, when the test targets one
+  targetForm    String?
+  targetField   String?
+  /// Stable signature of a computed design, so re-designing cannot duplicate it
+  designKey     String?
+  /// specified | stated-rule | implicit
+  oracle        String?
+  /// The rule or expectation this test checks, quoted
+  oracleText    String?
+  /// auto | anonymous | signed-in
+  auth          String   @default("auto")
+  /// 1 high, 2 normal, 3 low
+  priority      Int      @default(2)
+  /// pass | known-failing  (known-failing = reproduces an open bug on purpose)
+  expectation   String   @default("pass")
+  /// Excluded from suite verdicts because it has proven unreliable
+  quarantined   Boolean  @default(false)
+  createdAt     DateTime @default(now())
+
+  runs       Run[]
+  links      TestRequirement[]
+  bugReports BugReport[]
+
+  @@unique([projectId, designKey])
+}
+
+/// Which requirements a test case is evidence for. Stored once, so coverage is
+/// computed from results instead of re-judged by a model on every profile.
+model TestRequirement {
+  id            String      @id @default(cuid())
+  testCaseId    String
+  testCase      TestCase    @relation(fields: [testCaseId], references: [id], onDelete: Cascade)
+  requirementId String
+  requirement   Requirement @relation(fields: [requirementId], references: [id], onDelete: Cascade)
+  /// generated | proposed | manual
+  source        String      @default("generated")
+  confirmed     Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+
+  @@unique([testCaseId, requirementId])
+}
+
+model Run {
+  id               String    @id @default(cuid())
+  testCaseId       String
+  testCase         TestCase  @relation(fields: [testCaseId], references: [id], onDelete: Cascade)
+  /// queued | running | passed | failed | error | cancelled
+  status           String    @default("queued")
+  attempt          Int       @default(1)
+  retryOfId        String?
+  /// true when attempt 1 failed but the automatic re-run passed
+  flaky            Boolean   @default(false)
+  /// ai = the model drove the browser; replay = the compiled script ran, no AI
+  mode             String    @default("ai")
+  /// how many locators had to be repaired during a replay
+  healedSteps      Int       @default(0)
+  /// Why it failed: app = the application misbehaved (worth a bug report),
+  /// tool = TestPilot could not drive the browser (never a bug report).
+  failureKind      String?
+  startedAt        DateTime?
+  finishedAt       DateTime?
+  verdict          String?
+  reason           String?
+  llmCalls         Int       @default(0)
+  promptTokens     Int       @default(0)
+  completionTokens Int       @default(0)
+  tracePath        String?
+  /// normal | verify  (verify = the check that runs right after compiling)
+  kind             String    @default("normal")
+  /// parallel, when attempt 1 failed in a parallel suite and the solo retry passed
+  flakyCause       String?
+  /// JSON array of implicit-oracle findings (server errors, page exceptions)
+  anomalies        String    @default("[]")
+  /// specified | stated-rule | implicit — which oracle produced the verdict
+  oracle           String?
+  /// provider/model that drove this run, for the cost estimate
+  model            String?
+  suiteRunId       String?
+  suiteRun         SuiteRun? @relation(fields: [suiteRunId], references: [id], onDelete: SetNull)
+  createdAt        DateTime  @default(now())
+
+  steps      Step[]
+  bugReports BugReport[]
+}
+
+/// One press of "run all": the unit a build system reports on.
+model SuiteRun {
+  id         String    @id @default(cuid())
+  projectId  String
+  project    Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  /// running | passed | failed | cancelled
+  status     String    @default("running")
+  total      Int       @default(0)
+  passed     Int       @default(0)
+  failed     Int       @default(0)
+  errored    Int       @default(0)
+  startedAt  DateTime  @default(now())
+  finishedAt DateTime?
+
+  runs Run[]
+}
+
+model Step {
+  id                 String   @id @default(cuid())
+  runId              String
+  run                Run      @relation(fields: [runId], references: [id], onDelete: Cascade)
+  index              Int
+  /// JSON of the executed (or flagged) action
+  action             String
+  thought            String   @default("")
+  /// ok | failed | flagged   (flagged = rejected by the validator 3 times)
+  status             String
+  validationAttempts Int      @default(1)
+  /// JSON array of validator rejection reasons for this step
+  rejections         String   @default("[]")
+  error              String?
+  screenshotPath     String?
+  url                String   @default("")
+  durationMs         Int      @default(0)
+  /// The rendered observation the model saw before choosing this action
+  observation        String?
+  /// JSON LocatorCandidate verified to uniquely match the element acted on,
+  /// recorded so the step can be replayed without the AI.
+  locator            String?
+  /// JSON { appeared, disappeared, alerts } — what the page did in response to
+  /// the previous step. This is what lets the model verify an outcome it can see.
+  changes            String?
+  createdAt          DateTime @default(now())
+}
+
+/// M4 — a snapshot of how well the latest runs cover the requirements.
+model CoverageProfile {
+  id        String   @id @default(cuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  /// JSON array of run ids used as evidence
+  runIds    String
+  /// JSON {covered, partial, uncovered}
+  summary   String   @default("{}")
+  createdAt DateTime @default(now())
+
+  items CoverageItem[]
+}
+
+model CoverageItem {
+  id            String          @id @default(cuid())
+  profileId     String
+  profile       CoverageProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  requirementId String
+  requirement   Requirement     @relation(fields: [requirementId], references: [id], onDelete: Cascade)
+  /// violated | covered | partial | uncovered
+  status        String
+  rationale     String          @default("")
+  /// JSON array of step ids cited as evidence
+  evidence      String          @default("[]")
+}
+
+/// M5 — a generated test idea targeting an uncovered behaviour.
+model GapScenario {
+  id            String       @id @default(cuid())
+  projectId     String
+  project       Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  profileId     String?
+  requirementId String?
+  requirement   Requirement? @relation(fields: [requirementId], references: [id], onDelete: SetNull)
+  title         String
+  instruction   String
+  /// suggested | accepted | rejected | converted
+  status        String       @default("suggested")
+  rationale     String       @default("")
+  /// feasible | infeasible | unknown
+  feasibility   String       @default("unknown")
+  /// JSON array of UI elements the test depends on
+  neededUi      String       @default("[]")
+  /// id of the existing test case / scenario this duplicates (set by the filter)
+  duplicateOf   String?
+  createdAt     DateTime     @default(now())
+}
+
+model BugReport {
+  id               String   @id @default(cuid())
+  runId            String
+  run              Run      @relation(fields: [runId], references: [id], onDelete: Cascade)
+  projectId        String
+  project          Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  testCaseId       String?
+  testCase         TestCase? @relation(fields: [testCaseId], references: [id], onDelete: SetNull)
+  /// Signature of (test, failing action, failing message) — the same defect
+  /// seen again raises occurrences instead of filing a second report.
+  fingerprint      String?
+  occurrences      Int      @default(1)
+  lastSeenAt       DateTime @default(now())
+  lastRunId        String?
+  /// Set when the test that filed this bug starts passing again
+  passingSince     DateTime?
+  /// specified | stated-rule | implicit, and the rule quoted
+  oracle           String?
+  oracleText       String?
+  title            String
+  /// critical | high | medium | low
+  severity         String
+  /// JSON array of strings
+  stepsToReproduce String
+  expected         String
+  actual           String
+  notes            String   @default("")
+  screenshotPath   String?
+  /// open | closed
+  status           String   @default("open")
+  createdAt        DateTime @default(now())
+}
+
+/// A page discovered by the explorer, with the structure needed to write real
+/// tests about it: its forms, their fields, and the rules the page states
+/// ("At least 8 characters") that an expected outcome can be derived from.
+model AppPage {
+  id           String   @id @default(cuid())
+  projectId    String
+  project      Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  url          String
+  title        String   @default("")
+  /// auth | form | listing | detail | cart | checkout | admin | other
+  kind         String   @default("other")
+  /// JSON: [{ name, fields: [{label,type,required,hint,options}], submitLabel }]
+  forms        String   @default("[]")
+  /// JSON: primary clickable labels
+  actions      String   @default("[]")
+  /// JSON: visible rule/validation text found on the page
+  rules        String   @default("[]")
+  /// JSON: headings, used to describe the page
+  headings     String   @default("[]")
+  /// JSON: sample item titles found on a listing, usable as real test data
+  samples      String   @default("[]")
+  reachedVia   String   @default("")
+  requiresAuth Boolean  @default(false)
+  discoveredAt DateTime @default(now())
+
+  @@unique([projectId, url])
+}
+
+/// DOM-only knowledge of the application: every interactive element ever observed.
+/// Used by the gap filter to decide whether a proposed test is feasible.
+model ElementInventory {
+  id        String   @id @default(cuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  url       String
+  role      String
+  label     String
+  href      String?
+  seenAt    DateTime @default(now())
+
+  @@unique([projectId, url, role, label])
+}
+
+/// Response cache: identical prompts are served from here when providers are down.
+model LlmCache {
+  hash      String   @id
+  kind      String
+  model     String
+  response  String
+  createdAt DateTime @default(now())
+}

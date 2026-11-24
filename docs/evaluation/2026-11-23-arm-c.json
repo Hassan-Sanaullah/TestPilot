@@ -1,0 +1,63 @@
+{
+  "at": "2026-11-23T19:15:30.371Z",
+  "args": {
+    "arms": [
+      "C"
+    ],
+    "reps": 1,
+    "label": "arm-c",
+    "skipClean": false
+  },
+  "results": [
+    {
+      "rep": 1,
+      "arm": "C",
+      "shop": "bugs",
+      "tests": 24,
+      "designed": 49,
+      "passed": 17,
+      "failed": 3,
+      "toolFailures": 0,
+      "reports": 1,
+      "seededFound": [],
+      "falseReports": 1,
+      "duplicateReports": 0,
+      "llmCalls": 99,
+      "promptTokens": 351437,
+      "completionTokens": 7850,
+      "seconds": 1203,
+      "coverage": {
+        "violated": 0,
+        "covered": 0,
+        "partial": 0,
+        "uncovered": 0,
+        "total": 0
+      }
+    },
+    {
+      "rep": 1,
+      "arm": "C",
+      "shop": "clean",
+      "tests": 24,
+      "designed": 60,
+      "passed": 16,
+      "failed": 0,
+      "toolFailures": 0,
+      "reports": 0,
+      "seededFound": [],
+      "falseReports": 0,
+      "duplicateReports": 0,
+      "llmCalls": 82,
+      "promptTokens": 285385,
+      "completionTokens": 6342,
+      "seconds": 1545,
+      "coverage": {
+        "violated": 0,
+        "covered": 0,
+        "partial": 0,
+        "uncovered": 0,
+        "total": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>TestPilot — Run detail, light</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+  <style>
+    body { margin: 0; background: #EEF0F6; font-family: Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #5B6377; text-decoration: none; }
+    a:hover { color: #171A21; }
+    .step:hover { background: #F3F5FA; }
+  </style>
+</helmet>
+
+<div style="min-height: 100vh; background: #EEF0F6; color: #171A21; box-sizing: border-box; padding: 28px 30px 34px; display: flex; flex-direction: column; gap: 20px">
+
+  <div>
+    <a href="MainLight.dc.html" style="display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 500; margin-bottom: 14px">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M11 7H3M6.4 3.6 3 7l3.4 3.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      All runs
+    </a>
+
+    <div style="display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 18px">
+      <div style="min-width: 0">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px">
+          <h1 style="margin: 0; font-size: 30px; font-weight: 800; letter-spacing: -0.03em">Coupon SAVE10 applies 10% off</h1>
+          <span style="display: inline-flex; align-items: center; gap: 8px; background: #D1476A; border-radius: 999px; padding: 8px 18px 8px 14px; font-size: 13px; font-weight: 700; color: #FFFFFF">
+            <svg width="13" height="13" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3.5 3.5 8.5 8.5M8.5 3.5 3.5 8.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path></svg>
+            Failed
+          </span>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin-top: 15px">
+          <sc-for list="{{chips}}" as="c" hint-placeholder-count="4">
+            <span style="background: rgba(255,255,255,0.6); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border: 1px solid rgba(255,255,255,0.95); box-sizing: border-box; border-radius: 999px; padding: 8px 16px; font-size: 12.5px; font-weight: 500; color: #5B6377">{{c}}</span>
+          </sc-for>
+          <span style="display: inline-flex; align-items: center; gap: 8px; background: rgba(209,71,106,0.12); border-radius: 999px; padding: 8px 16px; font-size: 12.5px; font-weight: 700; color: #A82850">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: #D1476A"></span>
+            Cause: the application
+          </span>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 10px">
+        <button type="button" style="display: inline-flex; align-items: center; gap: 8px; min-height: 48px; background: #FFFFFF; border: none; color: #171A21; border-radius: 15px; padding: 0 18px; font-family: Inter, sans-serif; font-size: 13px; font-weight: 600; cursor: pointer">
+          <svg width="15" height="15" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M12 7a5 5 0 1 1-1.6-3.7M12 2v2.6H9.4" stroke="#5B6377" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          Re-author
+        </button>
+        <button type="button" style="display: inline-flex; align-items: center; gap: 8px; min-height: 48px; background: #FFFFFF; border: none; color: #171A21; border-radius: 15px; padding: 0 18px; font-family: Inter, sans-serif; font-size: 13px; font-weight: 600; cursor: pointer">
+          <svg width="15" height="15" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 2v7M4.2 6.2 7 9l2.8-2.8M2.5 11.5h9" stroke="#5B6377" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          spec.ts
+        </button>
+        <button type="button" style="display: inline-flex; align-items: center; gap: 8px; min-height: 48px; background: {{accent}}; border: none; color: #FFFFFF; border-radius: 15px; padding: 0 20px; font-family: Inter, sans-serif; font-size: 13.5px; font-weight: 600; cursor: pointer">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13a4 4 0 0 0 4-4 4 4 0 0 0-8 0 4 4 0 0 0 4 4zM8 5V3M3.5 9H2M14 9h-1.5M4.6 5.6 3.5 4.5M11.4 5.6 12.5 4.5" stroke="#FFFFFF" stroke-width="1.7" stroke-linecap="round"></path></svg>
+          File bug report
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filmstrip -->
+  <div style="background: linear-gradient(145deg, #FFFFFF 0%, #FCFDFF 46%, #F2F5FB 100%); border-radius: 24px; box-shadow: inset 1.5px 1.5px 0 rgba(255,255,255,0.95), 0 14px 34px rgba(23,26,33,0.09); padding: 20px 24px">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px">
+      <h2 style="margin: 0; font-size: 15px; font-weight: 700">Timeline</h2>
+      <span style="font-size: 12px; color: #5B6377; font-variant-numeric: tabular-nums">0.0s — 4.1s</span>
+    </div>
+    <div style="position: relative; display: flex; gap: 8px">
+      <sc-for list="{{frames}}" as="f" hint-placeholder-count="7">
+        <div style="flex: 1 1 0; min-width: 0; height: 62px; border-radius: 16px; background: {{f.bg}}; display: flex; flex-direction: column; justify-content: flex-end; padding: 9px 12px; box-sizing: border-box; overflow: hidden">
+          <span style="font-size: 11px; font-weight: 600; color: {{f.ink}}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{f.label}}</span>
+        </div>
+      </sc-for>
+      <span style="position: absolute; top: -6px; bottom: -6px; right: 3.2%; width: 3px; border-radius: 2px; background: #D1476A"></span>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch">
+
+    <div style="flex: 1 1 340px; min-width: 288px; max-width: 390px; background: linear-gradient(145deg, #FFFFFF 0%, #FCFDFF 46%, #F2F5FB 100%); border-radius: 24px; box-shadow: inset 1.5px 1.5px 0 rgba(255,255,255,0.95), 0 14px 34px rgba(23,26,33,0.09); padding: 22px 16px 16px; box-sizing: border-box">
+      <h2 style="margin: 0 0 16px 10px; font-size: 15px; font-weight: 700">Steps</h2>
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <sc-for list="{{steps}}" as="s" hint-placeholder-count="7">
+          <button type="button" class="step" style="display: flex; align-items: flex-start; gap: 12px; width: 100%; box-sizing: border-box; text-align: left; background: {{s.bg}}; border: none; border-radius: 16px; padding: 12px 13px; cursor: pointer; font-family: Inter, sans-serif; min-height: 44px">
+            <span style="flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%; background: {{s.dotBg}}; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #FFFFFF; font-variant-numeric: tabular-nums">{{s.n}}</span>
+            <span style="min-width: 0; flex: 1 1 auto">
+              <span style="display: flex; align-items: baseline; gap: 8px">
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; color: {{s.verbColor}}">{{s.verb}}</span>
+                <span style="margin-left: auto; font-size: 11px; color: #5B6377; font-variant-numeric: tabular-nums; flex: 0 0 auto">{{s.ms}}</span>
+              </span>
+              <span style="display: block; font-size: 12.5px; color: #3D4452; margin-top: 5px; line-height: 1.5; word-break: break-word">{{s.target}}</span>
+            </span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+
+      <div style="background: linear-gradient(145deg, #FFFFFF 0%, #FCFDFF 46%, #F2F5FB 100%); border-radius: 24px; box-shadow: inset 1.5px 1.5px 0 rgba(255,255,255,0.95), 0 14px 34px rgba(23,26,33,0.09); padding: 18px 22px 22px">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin-bottom: 16px">
+          <span style="color: #5B6377; border-radius: 999px; padding: 8px 16px; font-size: 12.5px; font-weight: 600">Before</span>
+          <span style="background: {{accent}}; color: #FFFFFF; border-radius: 999px; padding: 8px 18px; font-size: 12.5px; font-weight: 600">Action</span>
+          <span style="color: #5B6377; border-radius: 999px; padding: 8px 16px; font-size: 12.5px; font-weight: 600">After</span>
+          <span style="margin-left: auto; font-size: 12px; color: #5B6377; font-family: 'JetBrains Mono', monospace">localhost:4100/cart</span>
+        </div>
+
+        <div style="background: linear-gradient(145deg, #FAFBFE 0%, #F3F5FA 52%, #EBEEF6 100%); border-radius: 18px; padding: 20px 22px; color: #1A1D23; font-size: 12.5px">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid #E2E6EF">
+            <span style="font-size: 15px; font-weight: 800; letter-spacing: -0.01em">ShopMax</span>
+            <span style="color: #5B6472; font-size: 11.5px">Your cart · 1 item</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 13px; padding: 15px 0; border-bottom: 1px solid #E2E6EF">
+            <span style="width: 42px; height: 42px; border-radius: 13px; background: #D7DCE4; flex: 0 0 auto"></span>
+            <span style="min-width: 0">
+              <span style="display: block; font-weight: 600">Aurora Desk Lamp</span>
+              <span style="display: block; color: #5B6472; font-size: 11.5px; margin-top: 3px">Qty 1</span>
+            </span>
+            <span style="margin-left: auto; font-weight: 700; font-variant-numeric: tabular-nums">$45.00</span>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 15px 0">
+            <span style="border: 1px solid #C8CED8; border-radius: 12px; padding: 9px 14px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; background: #fff">SAVE10</span>
+            <span style="background: #1A1D23; color: #fff; border-radius: 12px; padding: 10px 18px; font-size: 11.5px; font-weight: 600">Apply</span>
+            <span style="color: #0E7A4C; font-size: 11.5px; font-weight: 700">Code applied</span>
+          </div>
+          <div style="border: 2.5px solid #D97706; border-radius: 14px; padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: #FFF6EB">
+            <span style="font-weight: 700">Discount</span>
+            <span style="font-weight: 800; font-variant-numeric: tabular-nums">&minus;$9.00</span>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 14px; margin-top: 13px; border-top: 1px solid #E2E6EF">
+            <span style="font-weight: 800">Total</span>
+            <span style="font-weight: 800; font-variant-numeric: tabular-nums">$36.00</span>
+          </div>
+        </div>
+        <p style="margin: 12px 4px 0; font-size: 11.5px; color: #5B6377">Captured page at step 7. The element the assertion checked is ringed.</p>
+      </div>
+
+      <div style="background: linear-gradient(145deg, #FFFFFF 0%, #FCFDFF 46%, #F2F5FB 100%); border-radius: 24px; box-shadow: inset 1.5px 1.5px 0 rgba(255,255,255,0.95), 0 14px 34px rgba(23,26,33,0.09); padding: 20px 24px 24px">
+        <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px">
+          <span style="background: {{accent}}; color: #FFFFFF; border-radius: 999px; padding: 8px 18px; font-size: 12.5px; font-weight: 600">Error</span>
+          <sc-for list="{{tabs}}" as="t" hint-placeholder-count="5">
+            <span style="color: #5B6377; border-radius: 999px; padding: 8px 16px; font-size: 12.5px; font-weight: 600">{{t}}</span>
+          </sc-for>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px">
+          <span style="width: 32px; height: 32px; border-radius: 50%; background: rgba(209,71,106,0.14); display: inline-flex; align-items: center; justify-content: center">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 4.6v4.2M8 11.2v.1" stroke="#A82850" stroke-width="2" stroke-linecap="round"></path></svg>
+          </span>
+          <span style="font-size: 15px; font-weight: 700">Assertion failed at step 7</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; margin-bottom: 16px">
+          <div style="background: linear-gradient(145deg, #FAFBFE 0%, #F3F5FA 52%, #EBEEF6 100%); border-radius: 18px; padding: 15px 18px">
+            <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #5B6377; margin-bottom: 8px">Expected</div>
+            <code style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #171A21">Discount &minus;$4.50</code>
+          </div>
+          <div style="background: rgba(209,71,106,0.1); border-radius: 18px; padding: 15px 18px">
+            <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #A82850; margin-bottom: 8px">Actual</div>
+            <code style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #171A21">Discount &minus;$9.00</code>
+          </div>
+        </div>
+
+        <p style="margin: 0 0 16px; font-size: 13px; color: #3D4452; line-height: 1.65">The checkout page states <em>SAVE10 &mdash; 10% off your order</em>. On a $45.00 subtotal that is $4.50. The application took $9.00, which is 20%. Judged against the page&rsquo;s own stated rule, so this is a defect rather than a missing expectation.</p>
+
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px">
+          <span style="display: inline-flex; align-items: center; gap: 8px; background: rgba(209,71,106,0.12); border-radius: 999px; padding: 8px 16px; font-size: 12.5px; font-weight: 700; color: #A82850">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: #D1476A"></span>
+            Severity: high
+          </span>
+          <span style="background: linear-gradient(145deg, #FAFBFE 0%, #F3F5FA 52%, #EBEEF6 100%); border-radius: 999px; padding: 8px 16px; font-size: 12.5px; font-weight: 500; color: #5B6377">Reproduced on re-run</span>
+          <span style="background: linear-gradient(145deg, #FAFBFE 0%, #F3F5FA 52%, #EBEEF6 100%); border-radius: 999px; padding: 8px 16px; font-size: 12.5px; font-weight: 500; color: #5B6377">Requirement R-07</span>
+          <a href="#bug" style="margin-left: auto; display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 700; color: #4B4EB5">
+            Open the bug report
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7.6 3.6 11 7l-3.4 3.4" stroke="#4B4EB5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#5C5FC8","options":["#5C5FC8","#1C9ED9","#0E9C63","#E35C9A"],"section":"Theme"},"$preview":{"width":1360,"height":1020}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const accent = this.props.accent ?? '#5C5FC8';
+
+    const rows = [
+      ['navigate', 'localhost:4100', '412ms', '#1C9ED9'],
+      ['click', 'Accept all — cookie consent banner', '198ms', '#1C9ED9'],
+      ['click', 'Add to cart — Aurora Desk Lamp', '241ms', '#0E9C63'],
+      ['click', 'Cart — header link', '305ms', '#0E9C63'],
+      ['type', 'Discount code field ← "SAVE10"', '164ms', '#D97706'],
+      ['click', 'Apply — discount form', '287ms', '#D97706'],
+      ['assertText', 'Order summary contains "Discount −$4.50"', '96ms', 'fail']
+    ];
+
+    const steps = rows.map(([verb, target, ms, color], i) => {
+      const failed = color === 'fail';
+      return {
+        n: i + 1, verb: verb, target: target, ms: ms,
+        bg: failed ? 'rgba(209,71,106,0.1)' : 'transparent',
+        dotBg: failed ? '#D1476A' : color,
+        verbColor: failed ? '#A82850' : '#4B4EB5'
+      };
+    });
+
+    const frames = ['navigate', 'consent', 'add', 'cart', 'type', 'apply', 'assert'].map((label, i) => ({
+      label: label,
+      bg: i === 6 ? 'rgba(209,71,106,0.12)' : '#F3F5FA',
+      ink: i === 6 ? '#A82850' : '#5B6377'
+    }));
+
+    return {
+      accent: accent, steps: steps, frames: frames,
+      chips: ['Deterministic replay', '0 LLM calls', '4.1s', 'Chromium 1280 × 800'],
+      tabs: ['Log', 'What the AI saw', 'Network', 'Console', 'Locator']
+    };
+  }
+}
+</script>
+</body>
+</html>

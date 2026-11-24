@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>TestPilot — Test cases, light</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+  <style>
+    body { margin: 0; background: #EEF0F6; font-family: Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #5B6377; text-decoration: none; }
+    a:hover { color: #171A21; }
+    .row:hover { background: #F3F5FA; }
+    .chip:hover { background: #E7EAF1; color: #171A21; }
+  </style>
+</helmet>
+
+<div style="min-height: 100vh; background: #EEF0F6; color: #171A21; box-sizing: border-box; padding: 28px 30px 34px; display: flex; flex-direction: column; gap: 20px">
+
+  <div style="display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 18px">
+    <div>
+      <h1 style="margin: 0; font-size: 32px; font-weight: 800; letter-spacing: -0.03em">Test cases</h1>
+      <p style="margin: 7px 0 0; font-size: 13.5px; color: #5B6377">24 in this project · 18 compiled to deterministic scripts</p>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px">
+      <label style="display: inline-flex; align-items: center; gap: 11px; background: rgba(255,255,255,0.6); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border: 1px solid rgba(255,255,255,0.95); box-sizing: border-box; border-radius: 999px; padding: 0 22px; min-height: 52px">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="4.4" stroke="#5B6377" stroke-width="1.6"></circle><path d="M10.4 10.4 14 14" stroke="#5B6377" stroke-width="1.6" stroke-linecap="round"></path></svg>
+        <span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%)">Search test cases</span>
+        <input type="search" placeholder="Search" style="background: transparent; border: none; outline: none; color: #171A21; font-family: Inter, sans-serif; font-size: 14px; width: 128px">
+      </label>
+      <button type="button" style="display: inline-flex; align-items: center; gap: 9px; min-height: 52px; background: {{accent}}; border: none; color: #FFFFFF; border-radius: 16px; padding: 0 22px; font-family: Inter, sans-serif; font-size: 14px; font-weight: 600; cursor: pointer">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="4.4" stroke="#FFFFFF" stroke-width="1.8"></circle><path d="M10.4 10.4 14 14" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"></path></svg>
+        Explore my app
+      </button>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div style="position: relative; background: linear-gradient(145deg, #FFFFFF 0%, #FCFDFF 46%, #F2F5FB 100%); border-radius: 24px; box-shadow: inset 1.5px 1.5px 0 rgba(255,255,255,0.95), 0 14px 34px rgba(23,26,33,0.09); padding: 26px 30px; overflow: hidden">
+    <span style="position: absolute; right: -50px; top: -70px; width: 220px; height: 220px; border-radius: 50%; filter: blur(36px); background: linear-gradient(150deg, rgba(92,95,200,0.16), rgba(28,158,217,0.08))"></span>
+    <span style="position: absolute; right: 150px; bottom: -60px; width: 110px; height: 110px; border-radius: 50%; filter: blur(34px); background: rgba(227,92,154,0.26)"></span>
+
+    <div style="position: relative; z-index: 2">
+      <h2 style="margin: 0; font-size: 21px; font-weight: 700; letter-spacing: -0.02em">What should I test?</h2>
+      <p style="margin: 8px 0 0; font-size: 13.5px; color: #5B6377">A few words is enough. TestPilot reads your app and writes the whole case.</p>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0 16px; max-width: 760px">
+        <label style="flex: 999 1 360px; min-width: 0; display: flex; align-items: center; gap: 12px; background: linear-gradient(145deg, #FAFBFE 0%, #F3F5FA 52%, #EBEEF6 100%); border-radius: 18px; padding: 0 20px; min-height: 58px">
+          <span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%)">Describe what to test</span>
+          <input type="text" value="password rules on sign-up" style="flex: 1 1 auto; min-width: 0; background: transparent; border: none; outline: none; color: #171A21; font-family: Inter, sans-serif; font-size: 15px">
+        </label>
+        <button type="button" style="flex: 0 0 auto; display: inline-flex; align-items: center; gap: 9px; min-height: 58px; background: #171A21; border: none; color: #FFFFFF; border-radius: 18px; padding: 0 26px; font-family: Inter, sans-serif; font-size: 14px; font-weight: 700; cursor: pointer">
+          Write the tests
+          <svg width="15" height="15" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7.6 3.6 11 7l-3.4 3.4" stroke="#FFFFFF" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px">
+        <span style="font-size: 12.5px; color: #5B6377; margin-right: 3px">Try</span>
+        <sc-for list="{{examples}}" as="e" hint-placeholder-count="5">
+          <button type="button" class="chip" style="background: #F3F5FA; border: none; color: #5B6377; border-radius: 999px; padding: 9px 16px; font-family: Inter, sans-serif; font-size: 12.5px; font-weight: 500; cursor: pointer">{{e}}</button>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- Drafts -->
+  <div>
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 14px">
+      <h2 style="margin: 0; font-size: 18px; font-weight: 700; letter-spacing: -0.02em">Tests TestPilot wrote from your app</h2>
+      <span style="background: {{accent}}; color: #FFFFFF; border-radius: 999px; padding: 4px 12px; font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums">6 new</span>
+      <span style="font-size: 13px; color: #5B6377">from 11 pages and 7 forms it found</span>
+      <button type="button" style="margin-left: auto; background: #FFFFFF; border: none; color: #171A21; border-radius: 15px; padding: 0 20px; min-height: 48px; font-family: Inter, sans-serif; font-size: 13px; font-weight: 600; cursor: pointer">Add all and run</button>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px">
+      <sc-for list="{{drafts}}" as="d" hint-placeholder-count="3">
+        <div style="background: linear-gradient(145deg, #FFFFFF 0%, #FCFDFF 46%, #F2F5FB 100%); border-radius: 24px; box-shadow: inset 1.5px 1.5px 0 rgba(255,255,255,0.95), 0 14px 34px rgba(23,26,33,0.09); padding: 22px 24px; display: flex; flex-direction: column; gap: 12px">
+          <div style="display: flex; align-items: center; gap: 11px">
+            <span style="width: 38px; height: 38px; border-radius: 13px; background: {{d.kindColor}}; display: inline-flex; align-items: center; justify-content: center">
+              <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="{{d.icon}}" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </span>
+            <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #5B6377">{{d.kind}}</span>
+          </div>
+          <h3 style="margin: 0; font-size: 15px; font-weight: 700; line-height: 1.4; letter-spacing: -0.01em">{{d.title}}</h3>
+          <p style="margin: 0; font-size: 12.5px; color: #5B6377; line-height: 1.6">{{d.why}}</p>
+          <div style="display: flex; align-items: center; gap: 10px; margin-top: auto; padding-top: 8px">
+            <button type="button" style="flex: 1 1 auto; min-height: 48px; background: #F3F5FA; border: none; color: #171A21; border-radius: 15px; font-family: Inter, sans-serif; font-size: 13px; font-weight: 600; cursor: pointer">Add and run</button>
+            <button type="button" aria-label="Dismiss this suggestion" style="flex: 0 0 auto; width: 48px; height: 48px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: none; border-radius: 15px; cursor: pointer">
+              <svg width="15" height="15" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M4 4l6 6M10 4l-6 6" stroke="#5B6377" stroke-width="1.8" stroke-linecap="round"></path></svg>
+            </button>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- Suite -->
+  <div style="background: linear-gradient(145deg, #FFFFFF 0%, #FCFDFF 46%, #F2F5FB 100%); border-radius: 24px; box-shadow: inset 1.5px 1.5px 0 rgba(255,255,255,0.95), 0 14px 34px rgba(23,26,33,0.09); padding: 22px 26px 16px">
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 18px">
+      <h2 style="margin: 0 14px 0 0; font-size: 18px; font-weight: 700; letter-spacing: -0.02em">Your suite</h2>
+      <span style="background: {{accent}}; color: #FFFFFF; border-radius: 999px; padding: 8px 18px; font-size: 12.5px; font-weight: 600">All 24</span>
+      <sc-for list="{{filters}}" as="f" hint-placeholder-count="3">
+        <button type="button" class="chip" style="background: #F3F5FA; border: none; color: #5B6377; border-radius: 999px; padding: 9px 18px; font-family: Inter, sans-serif; font-size: 12.5px; font-weight: 500; cursor: pointer">{{f}}</button>
+      </sc-for>
+      <button type="button" style="margin-left: auto; display: inline-flex; align-items: center; gap: 9px; background: #F3F5FA; border: none; color: #171A21; border-radius: 15px; padding: 0 20px; min-height: 48px; font-family: Inter, sans-serif; font-size: 13px; font-weight: 600; cursor: pointer">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M4 2.5 11 7 4 11.5z" fill="#171A21"></path></svg>
+        Run selected
+      </button>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <sc-for list="{{cases}}" as="c" hint-placeholder-count="6">
+        <div class="row" style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px; border-radius: 18px; padding: 14px 16px">
+          <span style="flex: 0 0 auto; width: 46px; height: 46px; border-radius: 50%; background: {{c.dot}}; display: inline-flex; align-items: center; justify-content: center">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="{{c.resultIcon}}" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </span>
+
+          <span style="flex: 999 1 240px; min-width: 0">
+            <a href="RunDetailLight.dc.html" style="display: block; font-size: 14.5px; font-weight: 600; color: #171A21">{{c.title}}</a>
+            <span style="display: block; font-size: 12px; color: #5B6377; margin-top: 4px">{{c.area}} · {{c.result}}</span>
+          </span>
+
+          <span style="flex: 0 0 auto; background: {{c.stateBg}}; border-radius: 999px; padding: 8px 16px; font-size: 12px; font-weight: 700; color: {{c.stateInk}}">{{c.state}}</span>
+
+          <span style="flex: 0 0 auto; width: 56px; text-align: right; font-size: 13px; color: #5B6377; font-variant-numeric: tabular-nums">{{c.time}}</span>
+
+          <button type="button" style="flex: 0 0 auto; display: inline-flex; align-items: center; gap: 7px; background: #E7EAF1; border: none; color: #171A21; border-radius: 14px; padding: 0 18px; min-height: 44px; font-family: Inter, sans-serif; font-size: 12.5px; font-weight: 600; cursor: pointer">
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M4 2.5 11 7 4 11.5z" fill="#171A21"></path></svg>
+            {{c.cta}}
+          </button>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#5C5FC8","options":["#5C5FC8","#1C9ED9","#0E9C63","#E35C9A"],"section":"Theme"},"$preview":{"width":1360,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const accent = this.props.accent ?? '#5C5FC8';
+
+    const drafts = [
+      { kind: 'Boundary', kindColor: '#D97706', icon: 'M8 2.5v5.6l3.4 2', title: 'Sign-up rejects a 7-character password', why: 'The form states "At least 8 characters", so the character below the limit is the case worth checking.' },
+      { kind: 'Negative', kindColor: '#1C9ED9', icon: 'M8 2.2 13.8 13H2.2L8 2.2zM8 6.6v2.8M8 11.2v.1', title: 'Sign-up rejects an address with no @ sign', why: 'The email field is type=email, so the browser rule and the server rule should agree.' },
+      { kind: 'Main path', kindColor: '#0E9C63', icon: 'M3 8.4 6.4 11.8 13 5.2', title: 'A new account can sign in straight away', why: 'Register, sign out, sign back in. Nothing covers the hand-off between those two forms yet.' }
+    ];
+
+    const tick = 'M3 8.4 6.4 11.8 13 5.2';
+    const cross = 'M4.6 4.6l6.8 6.8M11.4 4.6l-6.8 6.8';
+    const dash = 'M4.5 8h7';
+
+    const det = { state: 'Deterministic', stateBg: 'rgba(92,95,200,0.14)', stateInk: '#4B4EB5', cta: 'Replay' };
+    const ai = { state: 'Needs authoring', stateBg: '#E7EAF1', stateInk: '#5B6377', cta: 'Author' };
+
+    const rows = [
+      ['Registration states its password rule', 'Sign-up', det, 'Passed', '#0E9C63', tick, '3.4s'],
+      ['Coupon SAVE10 applies 10% off', 'Checkout', det, 'Failed', '#D1476A', cross, '4.1s'],
+      ['Search finds products regardless of case', 'Catalogue', det, 'Failed', '#D1476A', cross, '3.9s'],
+      ['Checkout completes across three steps', 'Checkout', det, 'Passed', '#0E9C63', tick, '5.2s'],
+      ['Filter survives a move to page two', 'Catalogue', ai, 'Not run', '#9AA3B5', dash, '—'],
+      ['Admin sorts order totals numerically', 'Admin', det, 'Passed', '#0E9C63', tick, '4.6s']
+    ];
+
+    const cases = rows.map(([title, area, mode, result, dot, resultIcon, time]) => ({
+      title: title, area: area, state: mode.state, stateBg: mode.stateBg,
+      stateInk: mode.stateInk, cta: mode.cta, result: result, dot: dot,
+      resultIcon: resultIcon, time: time
+    }));
+
+    return {
+      accent: accent,
+      examples: ['password rules', 'the checkout', 'search and filters', 'sign in', 'the admin grid'],
+      filters: ['Deterministic 18', 'Needs authoring 6', 'Failing 2'],
+      drafts: drafts,
+      cases: cases
+    };
+  }
+}
+</script>
+</body>
+</html>

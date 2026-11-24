@@ -1,0 +1,31 @@
+{
+  "name": "testpilot",
+  "version": "0.1.0",
+  "private": true,
+  "description": "TestPilot \u2014 AI-assisted web testing platform with automatic missing-test discovery and bug reporting.",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "setup": "npm install && npm run db:setup && npx playwright install chromium",
+    "dev": "concurrently -k -n server,web,shop -c blue,green,yellow \"npm run dev -w @testpilot/server\" \"npm run dev -w @testpilot/web\" \"npm run dev -w @testpilot/demo-shop\"",
+    "dev:server": "npm run dev -w @testpilot/server",
+    "dev:web": "npm run dev -w @testpilot/web",
+    "dev:shop": "npm run dev -w @testpilot/demo-shop",
+    "db:setup": "npm run db:setup -w @testpilot/server",
+    "db:studio": "npm run db:studio -w @testpilot/server",
+    "explore": "npm run explore -w @testpilot/server --",
+    "test": "npm test -w @testpilot/server",
+    "typecheck": "npm run typecheck -w @testpilot/server && npm run typecheck -w @testpilot/web",
+    "build": "npm run build -w @testpilot/web",
+    "bench": "npm run bench -w @testpilot/server --",
+    "suite": "npm run suite -w @testpilot/server --",
+    "evaluate": "npm run evaluate -w @testpilot/server --"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

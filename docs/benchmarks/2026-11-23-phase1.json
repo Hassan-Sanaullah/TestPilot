@@ -1,0 +1,198 @@
+{
+  "label": "phase1",
+  "at": "2026-11-23T16:41:27.869Z",
+  "machine": {
+    "platform": "win32",
+    "cpus": 8,
+    "node": "v22.13.0"
+  },
+  "settings": {
+    "runConcurrency": 4,
+    "aiConcurrency": 2,
+    "traceMode": "on-failure",
+    "headless": true
+  },
+  "authoring": [
+    {
+      "name": "read-only (2 steps)",
+      "ms": 2888,
+      "steps": 2
+    },
+    {
+      "name": "form (7 steps)",
+      "ms": 2236,
+      "steps": 6
+    },
+    {
+      "name": "flow (6 steps)",
+      "ms": 2412,
+      "steps": 6
+    }
+  ],
+  "singleReplay": {
+    "read-only (2 steps)": {
+      "wallMs": {
+        "min": 491,
+        "median": 549,
+        "max": 587,
+        "mean": 538
+      },
+      "phases": {
+        "goto": {
+          "ms": 1061,
+          "calls": 5
+        },
+        "screenshot": {
+          "ms": 518,
+          "calls": 5
+        },
+        "act": {
+          "ms": 130,
+          "calls": 5
+        },
+        "contextClose": {
+          "ms": 40,
+          "calls": 5
+        },
+        "traceStop": {
+          "ms": 17,
+          "calls": 5
+        },
+        "launch": {
+          "ms": 0,
+          "calls": 5
+        },
+        "settle": {
+          "ms": 0,
+          "calls": 5
+        }
+      },
+      "stepMedianMs": {
+        "1": 126
+      }
+    },
+    "form (7 steps)": {
+      "wallMs": {
+        "min": 925,
+        "median": 997,
+        "max": 1018,
+        "mean": 981
+      },
+      "phases": {
+        "screenshot": {
+          "ms": 1403,
+          "calls": 20
+        },
+        "goto": {
+          "ms": 1067,
+          "calls": 5
+        },
+        "settle": {
+          "ms": 733,
+          "calls": 20
+        },
+        "act": {
+          "ms": 436,
+          "calls": 20
+        },
+        "contextClose": {
+          "ms": 45,
+          "calls": 5
+        },
+        "traceStop": {
+          "ms": 18,
+          "calls": 5
+        },
+        "launch": {
+          "ms": 0,
+          "calls": 5
+        }
+      },
+      "stepMedianMs": {
+        "1": 282,
+        "2": 76,
+        "3": 85,
+        "4": 73
+      }
+    },
+    "flow (6 steps)": {
+      "wallMs": {
+        "min": 1046,
+        "median": 1116,
+        "max": 1124,
+        "mean": 1094
+      },
+      "phases": {
+        "settle": {
+          "ms": 1448,
+          "calls": 20
+        },
+        "screenshot": {
+          "ms": 1086,
+          "calls": 20
+        },
+        "goto": {
+          "ms": 993,
+          "calls": 5
+        },
+        "act": {
+          "ms": 669,
+          "calls": 20
+        },
+        "contextClose": {
+          "ms": 43,
+          "calls": 5
+        },
+        "traceStop": {
+          "ms": 14,
+          "calls": 5
+        },
+        "launch": {
+          "ms": 0,
+          "calls": 5
+        }
+      },
+      "stepMedianMs": {
+        "1": 251,
+        "2": 57,
+        "3": 260,
+        "4": 69
+      }
+    }
+  },
+  "suite": {
+    "runs": 12,
+    "totalMs": 3726,
+    "perRunMs": 311,
+    "phases": {
+      "screenshot": {
+        "ms": 8352,
+        "calls": 36
+      },
+      "goto": {
+        "ms": 4408,
+        "calls": 12
+      },
+      "act": {
+        "ms": 3260,
+        "calls": 36
+      },
+      "settle": {
+        "ms": 2677,
+        "calls": 36
+      },
+      "contextClose": {
+        "ms": 408,
+        "calls": 12
+      },
+      "traceStop": {
+        "ms": 132,
+        "calls": 12
+      },
+      "launch": {
+        "ms": 0,
+        "calls": 12
+      }
+    }
+  }
+}

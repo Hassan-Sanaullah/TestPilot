@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>TestPilot — Overview, light</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+  <style>
+    body { margin: 0; background: #EEF0F6; font-family: Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #5B6377; text-decoration: none; }
+    a:hover { color: #171A21; }
+    .nav:hover { background: #F3F5FA; color: #171A21; }
+  </style>
+</helmet>
+
+<div style="min-height: 100vh; background: #EEF0F6; color: #171A21; display: flex; flex-wrap: wrap; align-items: stretch">
+
+  <!-- Sidebar -->
+  <div style="flex: 0 1 252px; min-width: 216px; box-sizing: border-box; background: linear-gradient(165deg, #FFFFFF 0%, #FDFDFF 40%, #F5F7FC 100%); padding: 28px 20px; display: flex; flex-direction: column; gap: 30px">
+
+    <div style="display: flex; align-items: center; gap: 9px; padding-left: 6px">
+      <span style="width: 15px; height: 15px; border-radius: 4px; background: #1C9ED9"></span>
+      <span style="width: 15px; height: 15px; border-radius: 50%; background: #E35C9A"></span>
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 2.6 13.2 8 4 13.4z" fill="#D97706"></path></svg>
+      <span style="margin-left: 6px; font-size: 15px; font-weight: 700; letter-spacing: -0.01em">TestPilot</span>
+    </div>
+
+    <nav style="display: flex; flex-direction: column; gap: 5px" aria-label="Sections">
+      <a href="#overview" style="display: flex; align-items: center; gap: 13px; padding: 14px 16px; border-radius: 16px; font-size: 14px; font-weight: 600; color: #FFFFFF; background: {{accent}}">
+        <svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="2" y="2" width="5" height="5" rx="1.6" fill="#FFFFFF"></rect><rect x="9" y="2" width="5" height="5" rx="1.6" fill="#FFFFFF" opacity="0.55"></rect><rect x="2" y="9" width="5" height="5" rx="1.6" fill="#FFFFFF" opacity="0.55"></rect><rect x="9" y="9" width="5" height="5" rx="1.6" fill="#FFFFFF"></rect></svg>
+        Dashboard
+      </a>
+      <sc-for list="{{nav}}" as="n" hint-placeholder-count="5">
+        <a class="nav" href="{{n.href}}" style="display: flex; align-items: center; gap: 13px; padding: 14px 16px; border-radius: 16px; font-size: 14px; font-weight: 500; color: #5B6377">
+          <svg width="17" height="17" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="{{n.d}}" stroke="#5B6377" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          {{n.label}}
+        </a>
+      </sc-for>
+    </nav>
+
+    <div style="margin-top: auto; background: linear-gradient(145deg, #FAFBFE 0%, #F3F5FA 52%, #EBEEF6 100%); border-radius: 22px; box-shadow: inset 1.5px 1.5px 0 rgba(255,255,255,0.9), 0 10px 26px rgba(23,26,33,0.07); padding: 22px 20px; text-align: center">
+      <p style="margin: 0 0 16px; font-size: 13.5px; font-weight: 600; line-height: 1.5">Let TestPilot find the tests you are missing</p>
+
+      <div style="position: relative; height: 92px; margin-bottom: 18px">
+        <span style="position: absolute; left: 50%; top: 6px; transform: translateX(-50%); width: 62px; height: 62px; border-radius: 50%; background: linear-gradient(135deg, #1C9ED9, #5C5FC8)"></span>
+        <span style="position: absolute; left: 18px; top: 52px; width: 26px; height: 26px; border-radius: 50%; background: #E35C9A; opacity: 0.85"></span>
+        <span style="position: absolute; right: 16px; top: 16px; width: 16px; height: 16px; border-radius: 50%; background: #D97706"></span>
+        <span style="position: absolute; right: 30px; top: 62px; width: 22px; height: 22px; border-radius: 50%; background: #0E9C63; opacity: 0.8"></span>
+        <svg width="30" height="30" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="position: absolute; left: 50%; top: 22px; transform: translateX(-50%)"><circle cx="7" cy="7" r="4.4" stroke="#FFFFFF" stroke-width="1.7"></circle><path d="M10.4 10.4 14 14" stroke="#FFFFFF" stroke-width="1.7" stroke-linecap="round"></path></svg>
+      </div>
+
+      <button type="button" style="width: 100%; min-height: 46px; background: {{accent}}; border: none; color: #FFFFFF; border-radius: 15px; font-family: Inter, sans-serif; font-size: 13.5px; font-weight: 600; cursor: pointer">Explore my app</button>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div style="flex: 999 1 600px; min-width: 0; box-sizing: border-box; padding: 28px 30px 34px">
+
+    <div style="display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 18px; margin-bottom: 26px">
+      <div>
+        <h1 id="overview" style="margin: 0; font-size: 36px; font-weight: 800; letter-spacing: -0.03em">Hello, ShopMax</h1>
+        <p style="margin: 7px 0 0; font-size: 13.5px; color: #5B6377">24 tests · last run 6 minutes ago</p>
+      </div>
+      <label style="display: inline-flex; align-items: center; gap: 11px; background: rgba(255,255,255,0.6); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border: 1px solid rgba(255,255,255,0.95); box-sizing: border-box; border-radius: 999px; padding: 0 22px; min-height: 52px; flex: 0 1 300px">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="4.4" stroke="#5B6377" stroke-width="1.6"></circle><path d="M10.4 10.4 14 14" stroke="#5B6377" stroke-width="1.6" stroke-linecap="round"></path></svg>
+        <span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%)">Search tests and runs</span>
+        <input type="search" placeholder="Search" style="flex: 1 1 auto; min-width: 0; background: transparent; border: none; outline: none; color: #171A21; font-family: Inter, sans-serif; font-size: 14px">
+      </label>
+    </div>
+
+    <!-- hero -->
+    <div style="position: relative; background: linear-gradient(145deg, #FFFFFF 0%, #FCFDFF 46%, #F2F5FB 100%); border-radius: 24px; box-shadow: inset 1.5px 1.5px 0 rgba(255,255,255,0.95), 0 14px 34px rgba(23,26,33,0.09); padding: 28px 30px; margin-bottom: 20px; overflow: hidden">
+      <div style="position: relative; z-index: 2; max-width: 60%">
+        <h2 style="margin: 0; font-size: 23px; font-weight: 700; line-height: 1.3; letter-spacing: -0.02em">Replay the whole suite<br>without calling the AI</h2>
+        <div style="display: flex; align-items: center; gap: 13px; margin-top: 20px">
+          <span style="display: inline-flex; align-items: center; width: 62px; height: 34px; border-radius: 999px; background: {{accent}}; padding: 4px; box-sizing: border-box; justify-content: flex-end">
+            <span style="width: 26px; height: 26px; border-radius: 50%; background: #FFFFFF"></span>
+          </span>
+          <span style="font-size: 13px; color: #5B6377">18 of 24 compiled · about 65 seconds</span>
+        </div>
+      </div>
+
+      <span style="position: absolute; right: -40px; top: -60px; width: 230px; height: 230px; border-radius: 50%; filter: blur(36px); background: linear-gradient(145deg, rgba(92,95,200,0.22), rgba(227,92,154,0.14)); z-index: 1"></span>
+      <span style="position: absolute; right: 108px; bottom: -46px; width: 120px; height: 120px; border-radius: 50%; filter: blur(34px); background: rgba(28,158,217,0.28); z-index: 1"></span>
+      <svg width="58" height="58" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="position: absolute; right: 62px; top: 56px; z-index: 2"><path d="M13.4 2 5 13.3h5.2L9.8 22 18.6 10.2h-5.4L13.4 2z" fill="#5C5FC8"></path></svg>
+    </div>
+
+    <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr); gap: 20px">
+
+      <div style="background: linear-gradient(145deg, #FFFFFF 0%, #FCFDFF 46%, #F2F5FB 100%); border-radius: 24px; box-shadow: inset 1.5px 1.5px 0 rgba(255,255,255,0.95), 0 14px 34px rgba(23,26,33,0.09); padding: 24px 26px">
+        <h2 style="margin: 0 0 20px; font-size: 16.5px; font-weight: 700">Coverage by area</h2>
+        <div style="display: flex; flex-direction: column; gap: 20px">
+          <sc-for list="{{areas}}" as="a" hint-placeholder-count="4">
+            <div style="display: flex; align-items: center; gap: 14px">
+              <span style="min-width: 0; flex: 1 1 auto">
+                <span style="display: block; font-size: 14px; font-weight: 600">{{a.name}}</span>
+                <span style="display: block; font-size: 12px; color: #5B6377; margin-top: 4px">{{a.meta}}</span>
+              </span>
+              <span style="flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%; background: {{a.color}}; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #FFFFFF; font-variant-numeric: tabular-nums">{{a.pct}}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <sc-for list="{{modes}}" as="m" hint-placeholder-count="2">
+          <div style="position: relative; border-radius: 24px; box-shadow: inset 1.5px 1.5px 0 rgba(255,255,255,0.95), 0 14px 34px rgba(23,26,33,0.09); padding: 24px 26px; background: {{m.bg}}; overflow: hidden; min-height: 156px; box-sizing: border-box">
+            <span style="position: absolute; right: 0; top: 0; width: 148px; height: 148px; border-radius: 0 0 0 148px; background: rgba(255,255,255,0.14)"></span>
+            <span style="position: absolute; right: 0; bottom: 0; width: 96px; height: 96px; border-radius: 96px 0 0 0; background: rgba(255,255,255,0.1)"></span>
+
+            <div style="position: relative; z-index: 2">
+              <div style="display: flex; align-items: center; gap: 9px">
+                <span style="width: 30px; height: 30px; border-radius: 10px; background: rgba(255,255,255,0.24); display: inline-flex; align-items: center; justify-content: center">
+                  <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="{{m.d}}" fill="#FFFFFF"></path></svg>
+                </span>
+                <span style="font-size: 13px; font-weight: 600; color: #FFFFFF">{{m.label}}</span>
+              </div>
+              <div style="font-size: 38px; font-weight: 800; letter-spacing: -0.03em; color: #FFFFFF; margin: 16px 0 6px; font-variant-numeric: tabular-nums">{{m.value}}</div>
+              <div style="font-size: 12.5px; font-weight: 500; color: #FFFFFF">{{m.note}}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right rail -->
+  <div style="flex: 0 1 348px; min-width: 300px; box-sizing: border-box; padding: 28px 28px 34px 0; display: flex; flex-direction: column; gap: 20px">
+
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+      <button type="button" aria-label="Notifications" style="width: 52px; height: 52px; border-radius: 17px; background: #FFFFFF; border: none; display: inline-flex; align-items: center; justify-content: center; cursor: pointer">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="2.5" y="4.5" width="15" height="11" rx="3" stroke="#171A21" stroke-width="1.7"></rect><path d="M3.5 6.5 10 11l6.5-4.5" stroke="#171A21" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </button>
+      <div style="display: flex; align-items: center; gap: 11px">
+        <div style="text-align: right">
+          <div style="font-size: 13px; font-weight: 600">Test environment</div>
+          <div style="font-size: 11.5px; color: #5B6377; font-family: 'JetBrains Mono', monospace">localhost:4100</div>
+        </div>
+        <span style="width: 48px; height: 48px; border-radius: 16px; background: linear-gradient(140deg, #1C9ED9, #0E9C63); display: inline-flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: #FFFFFF">SM</span>
+      </div>
+    </div>
+
+    <div style="background: linear-gradient(145deg, #FFFFFF 0%, #FCFDFF 46%, #F2F5FB 100%); border-radius: 24px; box-shadow: inset 1.5px 1.5px 0 rgba(255,255,255,0.95), 0 14px 34px rgba(23,26,33,0.09); padding: 22px 24px">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px">
+        <h2 style="margin: 0; font-size: 16.5px; font-weight: 700">Runs</h2>
+        <button type="button" style="display: inline-flex; align-items: center; gap: 9px; background: #F3F5FA; border: none; color: #171A21; border-radius: 14px; padding: 0 16px; min-height: 44px; font-family: Inter, sans-serif; font-size: 13px; font-weight: 600; cursor: pointer">
+          14 days
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" stroke="#5B6377" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+      </div>
+
+      <div style="position: relative">
+        <div style="position: absolute; left: 0; top: 0; bottom: 22px; display: flex; flex-direction: column; justify-content: space-between; font-size: 11px; color: #5B6377; font-variant-numeric: tabular-nums">
+          <span>12</span><span>8</span><span>4</span><span>0</span>
+        </div>
+
+        <div style="margin-left: 26px">
+          <svg width="100%" height="168" viewBox="0 0 300 168" preserveAspectRatio="none" role="img" aria-label="Runs per day over the last fourteen days, peaking at twelve on 11 November.">
+            <path d="M0 126 C 12 120, 20 66, 34 62 C 48 58, 54 104, 68 108 C 82 112, 88 86, 102 84 C 116 82, 122 136, 136 138 C 150 140, 156 48, 170 44 C 184 40, 190 92, 204 96 C 218 100, 224 26, 238 24 C 252 22, 258 78, 272 86 C 284 93, 292 118, 300 132" fill="none" stroke="#5C5FC8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+            <circle cx="238" cy="24" r="5" fill="#D97706" stroke="#FFFFFF" stroke-width="2.5" vector-effect="non-scaling-stroke"></circle>
+          </svg>
+
+          <div style="position: absolute; right: 2px; top: 2px; background: rgba(23,26,33,0.78); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.14); border-radius: 15px; padding: 9px 14px">
+            <div style="font-size: 10.5px; color: #C3C9D8">11 Nov</div>
+            <div style="font-size: 15px; font-weight: 700; margin-top: 2px; color: #FFFFFF; font-variant-numeric: tabular-nums">12 runs</div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; gap: 4px; margin-top: 12px">
+            <sc-for list="{{months}}" as="m" hint-placeholder-count="5">
+              <span style="font-size: 11.5px; font-weight: 600; color: {{m.color}}; background: {{m.bg}}; border-radius: 999px; padding: 5px 11px">{{m.label}}</span>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background: linear-gradient(145deg, #FFFFFF 0%, #FCFDFF 46%, #F2F5FB 100%); border-radius: 24px; box-shadow: inset 1.5px 1.5px 0 rgba(255,255,255,0.95), 0 14px 34px rgba(23,26,33,0.09); padding: 24px 24px 26px; flex: 1 1 auto">
+      <h2 style="margin: 0 0 4px; font-size: 16.5px; font-weight: 700">Requirements verified</h2>
+      <p style="margin: 0 0 6px; font-size: 12px; color: #5B6377">17 of 20, with evidence</p>
+
+      <div style="position: relative; display: flex; justify-content: center; padding: 8px 0 18px">
+        <svg width="200" height="200" viewBox="0 0 200 200" role="img" aria-label="Requirement coverage by area: checkout forty per cent, catalogue twenty-five, sign-up twenty, admin fifteen.">
+          <circle cx="100" cy="100" r="76" fill="none" stroke="#E7EAF1" stroke-width="20"></circle>
+          <g transform="rotate(-90 100 100)" fill="none" stroke-width="20" stroke-linecap="round">
+            <circle cx="100" cy="100" r="76" stroke="#1C9ED9" stroke-dasharray="183 295" stroke-dashoffset="0"></circle>
+            <circle cx="100" cy="100" r="76" stroke="#E35C9A" stroke-dasharray="113 365" stroke-dashoffset="-191"></circle>
+            <circle cx="100" cy="100" r="76" stroke="#D97706" stroke-dasharray="88 390" stroke-dashoffset="-312"></circle>
+            <circle cx="100" cy="100" r="76" stroke="#0E9C63" stroke-dasharray="64 414" stroke-dashoffset="-408"></circle>
+          </g>
+          <text x="100" y="96" text-anchor="middle" fill="#171A21" font-family="Inter, sans-serif" font-size="40" font-weight="800" letter-spacing="-1.5">85</text>
+          <text x="139" y="96" text-anchor="middle" fill="#5B6377" font-family="Inter, sans-serif" font-size="15" font-weight="600">%</text>
+          <text x="100" y="120" text-anchor="middle" fill="#5B6377" font-family="Inter, sans-serif" font-size="12" font-weight="500">covered</text>
+        </svg>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 14px">
+        <sc-for list="{{legend}}" as="l" hint-placeholder-count="4">
+          <div style="display: flex; align-items: center; gap: 11px">
+            <span style="width: 10px; height: 10px; border-radius: 50%; background: {{l.color}}; flex: 0 0 auto"></span>
+            <span style="font-size: 13.5px; font-weight: 500; color: #5B6377">{{l.label}}</span>
+            <span style="margin-left: auto; font-size: 13.5px; font-weight: 700; font-variant-numeric: tabular-nums">{{l.value}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#5C5FC8","options":["#5C5FC8","#1C9ED9","#0E9C63","#E35C9A"],"section":"Theme"},"$preview":{"width":1360,"height":1020}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const accent = this.props.accent ?? '#5C5FC8';
+
+    const nav = [
+      { label: 'Test cases', href: 'TestCasesLight.dc.html', d: 'M2.5 5 4 6.5 7 3.5M2.5 11.5 4 13l3-3M9.5 5h4M9.5 11.5h4' },
+      { label: 'Runs', href: 'RunDetailLight.dc.html', d: 'M5 3.5 12 8 5 12.5z' },
+      { label: 'App map', href: '#appmap', d: 'M4 2.2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6zM12 6.2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6zM4 10.2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6zM5.9 5.2l4.2 2.1M5.9 10.8l4.2-2.1' },
+      { label: 'Bug reports', href: '#bugs', d: 'M8 13a4 4 0 0 0 4-4 4 4 0 0 0-8 0 4 4 0 0 0 4 4zM8 5V3M3.5 9H2M14 9h-1.5M4.6 5.6 3.5 4.5M11.4 5.6 12.5 4.5' },
+      { label: 'Settings', href: '#settings', d: 'M8 10.3A2.3 2.3 0 1 0 8 5.7a2.3 2.3 0 0 0 0 4.6zM8 1.8v1.6M8 12.6v1.6M1.8 8h1.6M12.6 8h1.6M3.6 3.6l1.1 1.1M11.3 11.3l1.1 1.1M12.4 3.6l-1.1 1.1M4.7 11.3l-1.1 1.1' }
+    ];
+
+    const areas = [
+      { name: 'Checkout', meta: '8 tests · 2 failing', pct: '92%', color: '#1C9ED9' },
+      { name: 'Catalogue', meta: '6 tests · all passing', pct: '78%', color: '#E35C9A' },
+      { name: 'Sign-up', meta: '5 tests · all passing', pct: '64%', color: '#D97706' },
+      { name: 'Admin', meta: '5 tests · 1 not run', pct: '41%', color: '#0E9C63' }
+    ];
+
+    const modes = [
+      {
+        label: 'Deterministic replay',
+        value: '3.6s',
+        note: '18 tests · 0 AI calls · identical every run',
+        bg: 'linear-gradient(135deg, #1580BC, #2A55C8)',
+        d: 'M9 1.3 3.4 8.9h3.5L6.6 14.7 12.2 7.1H8.7L9 1.3z'
+      },
+      {
+        label: 'AI authoring',
+        value: '20.9s',
+        note: '6 tests waiting · about 4 calls each',
+        bg: 'linear-gradient(135deg, #C9437F, #7C3BC4)',
+        d: 'M8 1.6 9.6 6 14 7.6 9.6 9.2 8 13.6 6.4 9.2 2 7.6 6.4 6 8 1.6z'
+      }
+    ];
+
+    const months = ['1 Nov', '4 Nov', '7 Nov', '11 Nov', '14 Nov'].map((label) => ({
+      label: label,
+      color: label === '11 Nov' ? '#171A21' : '#5B6377',
+      bg: label === '11 Nov' ? '#E7EAF1' : 'transparent'
+    }));
+
+    const legend = [
+      { label: 'Checkout', color: '#1C9ED9', value: '8 of 8' },
+      { label: 'Catalogue', color: '#E35C9A', value: '5 of 6' },
+      { label: 'Sign-up', color: '#D97706', value: '3 of 4' },
+      { label: 'Admin', color: '#0E9C63', value: '1 of 2' }
+    ];
+
+    return { accent: accent, nav: nav, areas: areas, modes: modes, months: months, legend: legend };
+  }
+}
+</script>
+</body>
+</html>

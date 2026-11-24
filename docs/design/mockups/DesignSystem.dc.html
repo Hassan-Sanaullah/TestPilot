@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>TestPilot — Tokens</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+  <style>
+    body { margin: 0; background: #222633; font-family: Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    pre { margin: 0; }
+  </style>
+</helmet>
+
+<div style="min-height: 100vh; background: #222633; color: #F2F4F8; box-sizing: border-box; padding: 28px 30px 34px">
+
+  <div style="margin-bottom: 22px">
+    <h1 style="margin: 0; font-size: 32px; font-weight: 800; letter-spacing: -0.03em">Tokens</h1>
+    <p style="margin: 7px 0 0; font-size: 13.5px; color: #A7AEC0">One accent palette, two surface sets. The four data colours were run through a colour-vision validator against both the navy and the white surface.</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px">
+
+    <!-- Accents -->
+    <div style="background: linear-gradient(145deg, #363D51 0%, #2A2F3E 48%, #232734 100%); border-radius: 24px; box-shadow: inset 1.5px 1.5px 0 rgba(255,255,255,0.09), 0 18px 42px rgba(8,10,16,0.40); padding: 24px 26px">
+      <h2 style="margin: 0 0 4px; font-size: 17px; font-weight: 700">Accent palette</h2>
+      <p style="margin: 0 0 18px; font-size: 12.5px; color: #A7AEC0">Identical in both themes</p>
+      <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px">
+        <sc-for list="{{accents}}" as="a" hint-placeholder-count="5">
+          <div>
+            <div style="height: 76px; border-radius: 20px; background: {{a.hex}}"></div>
+            <div style="font-size: 12px; font-weight: 600; margin-top: 10px">{{a.name}}</div>
+            <div style="font-size: 11px; color: #A7AEC0; font-family: 'JetBrains Mono', monospace; margin-top: 2px">{{a.hex}}</div>
+          </div>
+        </sc-for>
+      </div>
+      <p style="margin: 18px 0 0; font-size: 12px; color: #A7AEC0; line-height: 1.6">The reference used purple beside blue. Those two are indistinguishable to a red&ndash;green colourblind viewer, so purple became pink. Green and amber sit in the warn band, which is why every status also carries a shape and a word.</p>
+    </div>
+
+    <!-- Surfaces -->
+    <div style="background: linear-gradient(145deg, #363D51 0%, #2A2F3E 48%, #232734 100%); border-radius: 24px; box-shadow: inset 1.5px 1.5px 0 rgba(255,255,255,0.09), 0 18px 42px rgba(8,10,16,0.40); padding: 24px 26px">
+      <h2 style="margin: 0 0 18px; font-size: 17px; font-weight: 700">Surfaces</h2>
+
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <div>
+          <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #A7AEC0; margin-bottom: 10px">Dark</div>
+          <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px">
+            <sc-for list="{{darkSurfaces}}" as="s" hint-placeholder-count="5">
+              <div>
+                <div style="height: 52px; border-radius: 16px; background: {{s.hex}}; border: 1px solid #454B5E"></div>
+                <div style="font-size: 11px; font-weight: 600; margin-top: 7px">{{s.name}}</div>
+                <div style="font-size: 10px; color: #A7AEC0; font-family: 'JetBrains Mono', monospace">{{s.hex}}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #A7AEC0; margin-bottom: 10px">Light</div>
+          <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px">
+            <sc-for list="{{lightSurfaces}}" as="s" hint-placeholder-count="5">
+              <div>
+                <div style="height: 52px; border-radius: 16px; background: {{s.hex}}; border: 1px solid #454B5E"></div>
+                <div style="font-size: 11px; font-weight: 600; margin-top: 7px">{{s.name}}</div>
+                <div style="font-size: 10px; color: #A7AEC0; font-family: 'JetBrains Mono', monospace">{{s.hex}}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shape and type -->
+    <div style="background: linear-gradient(145deg, #363D51 0%, #2A2F3E 48%, #232734 100%); border-radius: 24px; box-shadow: inset 1.5px 1.5px 0 rgba(255,255,255,0.09), 0 18px 42px rgba(8,10,16,0.40); padding: 24px 26px">
+      <h2 style="margin: 0 0 18px; font-size: 17px; font-weight: 700">Shape and type</h2>
+
+      <div style="display: flex; flex-wrap: wrap; align-items: flex-end; gap: 16px; margin-bottom: 22px">
+        <sc-for list="{{radii}}" as="r" hint-placeholder-count="5">
+          <div style="text-align: center">
+            <div style="width: 72px; height: 56px; border-radius: {{r.value}}; background: #3C4255"></div>
+            <div style="font-size: 11px; color: #A7AEC0; margin-top: 8px">{{r.label}}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 16px">
+        <div>
+          <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #A7AEC0; margin-bottom: 6px">Inter 800 &mdash; page titles and figures</div>
+          <div style="font-size: 32px; font-weight: 800; letter-spacing: -0.03em">Hello, ShopMax</div>
+        </div>
+        <div>
+          <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #A7AEC0; margin-bottom: 6px">Inter 400 / 500 / 700 &mdash; interface</div>
+          <div style="font-size: 14px; line-height: 1.6">The registration page states its own password rule, so a test can judge against it.</div>
+        </div>
+        <div>
+          <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #A7AEC0; margin-bottom: 6px">JetBrains Mono &mdash; locators and URLs</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #C3C9D8">getByRole('button', { name: 'Apply' })</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Components -->
+    <div style="background: linear-gradient(145deg, #363D51 0%, #2A2F3E 48%, #232734 100%); border-radius: 24px; box-shadow: inset 1.5px 1.5px 0 rgba(255,255,255,0.09), 0 18px 42px rgba(8,10,16,0.40); padding: 24px 26px">
+      <h2 style="margin: 0 0 18px; font-size: 17px; font-weight: 700">Components</h2>
+
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 16px">
+        <button type="button" style="min-height: 48px; background: {{accent}}; border: none; color: #FFFFFF; border-radius: 16px; padding: 0 22px; font-family: Inter, sans-serif; font-size: 13.5px; font-weight: 600; cursor: pointer">Primary</button>
+        <button type="button" style="min-height: 48px; background: #FFFFFF; border: none; color: #1C2029; border-radius: 16px; padding: 0 22px; font-family: Inter, sans-serif; font-size: 13.5px; font-weight: 700; cursor: pointer">Contrast</button>
+        <button type="button" style="min-height: 48px; background: linear-gradient(145deg, #3F4658 0%, #333848 55%, #2D3140 100%); border: none; color: #F2F4F8; border-radius: 16px; padding: 0 22px; font-family: Inter, sans-serif; font-size: 13.5px; font-weight: 600; cursor: pointer">Secondary</button>
+        <span style="width: 48px; height: 48px; border-radius: 50%; background: #1C9ED9; display: inline-flex; align-items: center; justify-content: center; font-size: 12.5px; font-weight: 700; color: #FFFFFF">92%</span>
+        <span style="display: inline-flex; align-items: center; width: 62px; height: 34px; border-radius: 999px; background: {{accent}}; padding: 4px; box-sizing: border-box; justify-content: flex-end">
+          <span style="width: 26px; height: 26px; border-radius: 50%; background: #FFFFFF"></span>
+        </span>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin-bottom: 16px">
+        <sc-for list="{{badges}}" as="b" hint-placeholder-count="5">
+          <span style="display: inline-flex; align-items: center; gap: 8px; background: {{b.bg}}; border-radius: 999px; padding: 8px 16px; font-size: 12.5px; font-weight: 700; color: {{b.ink}}">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: {{b.dot}}; flex: 0 0 auto"></span>
+            {{b.label}}
+          </span>
+        </sc-for>
+      </div>
+
+      <div style="background: #1C2029; border-radius: 18px; padding: 16px 18px; overflow-x: auto">
+        <pre style="font-family: 'JetBrains Mono', monospace; font-size: 11px; line-height: 1.8; color: #C3C9D8">// tailwind.config — one palette, two surface sets
+accent: '#5C5FC8',
+data:   { blue:'#1C9ED9', pink:'#E35C9A',
+          amber:'#D97706', green:'#0E9C63' },
+bad:    '#D1476A',
+dark:   { page:'#222633', side:'#1C2029', card:'#2A2F3E',
+          raise:'#333848', ink:'#F2F4F8', ink2:'#A7AEC0' },
+light:  { page:'#EEF0F6', side:'#FFFFFF', card:'#FFFFFF',
+          raise:'#F3F5FA', ink:'#171A21', ink2:'#5B6377' },
+borderRadius: { chip:'999px', ctl:'16px', card:'24px' },
+
+// depth — every card, top-left bright to bottom-right dark
+card:  'linear-gradient(145deg, #363D51 0%, #2A2F3E 48%, #232734 100%)'
+shadow:'inset 1.5px 1.5px 0 rgba(255,255,255,.09),
+        0 18px 42px rgba(8,10,16,.40)'
+
+// frosted glass — search pills, meta chips, tooltips
+glass: 'rgba(58,65,86,.5)' + backdrop-blur(18px)
+       + 1px solid rgba(255,255,255,.09)
+
+// glow — decorative orbs only, never content
+orb:   accent at 40–55% alpha, filter: blur(36px)</pre>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#5C5FC8","options":["#5C5FC8","#1C9ED9","#0E9C63","#E35C9A"],"section":"Theme"},"$preview":{"width":1360,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const accent = this.props.accent ?? '#5C5FC8';
+    return {
+      accent: accent,
+      accents: [
+        { name: 'Accent', hex: accent },
+        { name: 'Blue', hex: '#1C9ED9' },
+        { name: 'Pink', hex: '#E35C9A' },
+        { name: 'Amber', hex: '#D97706' },
+        { name: 'Green', hex: '#0E9C63' }
+      ],
+      darkSurfaces: [
+        { name: 'Page', hex: '#222633' },
+        { name: 'Sidebar', hex: '#1C2029' },
+        { name: 'Card', hex: '#2A2F3E' },
+        { name: 'Raised', hex: '#333848' },
+        { name: 'Ink', hex: '#F2F4F8' }
+      ],
+      lightSurfaces: [
+        { name: 'Page', hex: '#EEF0F6' },
+        { name: 'Card', hex: '#FFFFFF' },
+        { name: 'Raised', hex: '#F3F5FA' },
+        { name: 'Line', hex: '#E2E6EF' },
+        { name: 'Ink', hex: '#171A21' }
+      ],
+      radii: [
+        { label: 'Chip 999', value: '999px' },
+        { label: 'Control 16', value: '16px' },
+        { label: 'Card 24', value: '24px' },
+        { label: 'Inner 18', value: '18px' },
+        { label: 'Badge 50%', value: '50%' }
+      ],
+      badges: [
+        { label: 'Passed', dot: '#0E9C63', bg: 'rgba(14,156,99,0.2)', ink: '#6FD6AC' },
+        { label: 'Failed', dot: '#D1476A', bg: 'rgba(209,71,106,0.2)', ink: '#F0A2B6' },
+        { label: 'Deterministic', dot: accent, bg: 'rgba(92,95,200,0.24)', ink: '#A9ACF0' },
+        { label: 'Needs authoring', dot: '#6B7389', bg: '#3C4255', ink: '#C3C9D8' },
+        { label: 'Tool failure', dot: '#D97706', bg: 'rgba(217,119,6,0.2)', ink: '#EFB25C' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
